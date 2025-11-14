@@ -61,7 +61,7 @@ const home: Home = {
         </Text>
       </Row>
     ),
-    href: "/work/building-once-ui-a-customizable-design-system",
+    href: "/work/catheterprinter",
   },
   subline: (
     <>
@@ -454,13 +454,13 @@ const about: About = {
         ],
         images: [
                     {
-            src: "/images/projects/project-01/bme1.jfif",
+            src: "/images/projects/project-01/bme1.jpg",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
                     {
-            src: "/images/projects/project-01/bme2.jfif",
+            src: "/images/projects/project-01/bme2.jpg",
             alt: "Once UI Project",
             width: 16,
             height: 9,
@@ -484,7 +484,7 @@ const about: About = {
         images: [
           // optional: leave the array empty if you don't want to display images
           {
-            src: "/images/projects/project-01/acmevent.jfif",
+            src: "/images/projects/project-01/acmevent.jpg",
             alt: "Once UI Project",
             width: 16,
             height: 9,
@@ -517,13 +517,13 @@ const about: About = {
         images: [
           // optional: leave the array empty if you don't want to display images
           {
-            src: "/images/projects/project-01/unm1.jfif",
+            src: "/images/projects/project-01/unm1.jpg",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
                     {
-            src: "/images/projects/project-01/unm2.jfif",
+            src: "/images/projects/project-01/unm2.jpg",
             alt: "Once UI Project",
             width: 16,
             height: 9,
@@ -637,37 +637,37 @@ const gallery: Gallery = {
 
   images: [
     {
-      src: "/images/gallery/stem2.jfif",
+      src: "/images/gallery/stem2.jpg",
       alt: "image",
       orientation: "horizontal",
     },
     {
-      src: "/images/gallery/bci2.jfif",
+      src: "/images/gallery/bci2.jpg",
       alt: "image",
       orientation: "vertical",
     },
     {
-      src: "/images/gallery/bme1.jfif",
+      src: "/images/gallery/bme1.jpg",
       alt: "image",
       orientation: "horizontal",
     },
     {
-      src: "/images/gallery/acmevent.jfif",
+      src: "/images/gallery/acmevent.jpg",
       alt: "image",
       orientation: "vertical",
     },
     {
-      src: "/images/gallery/bci4.jfif",
+      src: "/images/gallery/bci4.jpg",
       alt: "image",
       orientation: "vertical",
     },
     {
-      src: "/images/gallery/stem1.jfif",
+      src: "/images/gallery/stem1.jpg",
       alt: "image",
       orientation: "horizontal",
     },
     {
-      src: "/images/gallery/bme2.jfif",
+      src: "/images/gallery/bme2.jpg",
       alt: "image",
       orientation: "horizontal",
     },
