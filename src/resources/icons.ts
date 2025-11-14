@@ -14,6 +14,8 @@ import {
   HiOutlineRocketLaunch,
 } from "react-icons/hi2";
 
+import { SiPandas,SiScikitlearn } from "react-icons/si";
+
 import {
   PiHouseDuotone,
   PiUserCircleDuotone,
@@ -27,11 +29,72 @@ import {
   SiNextdotjs,
   SiFigma,
   SiSupabase,
+  SiPython,
+  SiCoursera,
+  SiCplusplus,
+  SiDotnet,
+  SiMongodb,
+  SiFirebase,
+  SiDocker,
+  SiKubernetes,
+  SiMysql,
+  SiSwift,
+  SiTypescript,
+  SiReact,
+  SiTailwindcss,
+  SiGit,
+  SiHiveBlockchain,
+  SiPytorch,
+  SiTensorflow,
+  SiAmazonwebservices,
+  SiGooglecloud,
+  SiMqtt,
+  SiRaspberrypi,
+  SiArduino,
+  SiLinux,
+  SiAutocad,
+  SiAltiumdesigner,
+  SiSolidity,
+  SiComsol,
+  SiDassaultsystemes,
+  SiRos,
+  SiLtspice,
+  SiKicad,
+  SiOpencv,
+  SiOpenai,
+  SiAdobeillustrator,
+  SiAdobephotoshop,
+  SiCss3,
+  SiHtml5,
+  SiJetbrains,
+  SiAndroidstudio,
+  SiAnsys,
+  SiLabview,
+
+
 } from "react-icons/si";
 
-import { FaDiscord, FaGithub, FaLinkedin, FaX, FaThreads, FaXTwitter, FaFacebook, FaPinterest, FaWhatsapp, FaReddit, FaTelegram, } from "react-icons/fa6";
+import{TbBrandCSharp, TbCircleLetterRFilled} from "react-icons/tb";
+import { FaCode } from "react-icons/fa";
+import { LiaBookMedicalSolid,LiaWaveSquareSolid } from "react-icons/lia";
+import { PiTrafficSignal, PiNetwork } from "react-icons/pi";
+import { GiMountaintop } from "react-icons/gi";
+import { FaBluetooth, } from "react-icons/fa";
+
+import { FaDiscord, FaGithub, FaLayerGroup, FaLinkedin, FaBook, FaX, FaThreads, FaXTwitter, FaFacebook, FaPinterest, FaWhatsapp, FaReddit, FaTelegram, } from "react-icons/fa6";
+import { blob } from "stream/consumers";
+import { networkInterfaces } from "os";
+import { AiOutlineX } from "react-icons/ai";
 
 export const iconLibrary: Record<string, IconType> = {
+  code: FaCode,
+  medicalBook: LiaBookMedicalSolid,
+  signal: PiTrafficSignal,
+  wave: LiaWaveSquareSolid,
+  layers: FaLayerGroup,
+  bookAlt: FaBook,
+  csharp: TbBrandCSharp,
+  r: TbCircleLetterRFilled,
   arrowUpRight: HiArrowUpRight,
   arrowRight: HiArrowRight,
   email: HiEnvelope,
@@ -63,6 +126,54 @@ export const iconLibrary: Record<string, IconType> = {
   whatsapp: FaWhatsapp,
   reddit: FaReddit,
   telegram: FaTelegram,
+  matlab: GiMountaintop,
+pandas: SiPandas,
+scikitlearn: SiScikitlearn,
+bluetooth: FaBluetooth,
+networkInterfaces: PiNetwork,
+xai: AiOutlineX,
+
+python: SiPython,
+coursera: SiCoursera,
+cplusplus: SiCplusplus,
+dotnet: SiDotnet,
+mongodb: SiMongodb,
+firebase: SiFirebase,
+docker: SiDocker,
+kubernetes: SiKubernetes,
+mysql: SiMysql,
+swift: SiSwift,
+typescript: SiTypescript,
+react: SiReact,
+tailwindcss: SiTailwindcss,
+git: SiGit,
+hiveblockchain: SiHiveBlockchain,
+pytorch: SiPytorch,
+tensorflow: SiTensorflow,
+aws: SiAmazonwebservices,
+googlecloud: SiGooglecloud,
+mqtt: SiMqtt,
+raspberrypi: SiRaspberrypi,
+arduino: SiArduino,
+linux: SiLinux,
+autocad: SiAutocad,
+altiumdesigner: SiAltiumdesigner,
+solidity: SiSolidity,
+comsol: SiComsol,
+dassaultsystemes: SiDassaultsystemes,
+ros: SiRos,
+ltspice: SiLtspice,
+kicad: SiKicad,
+opencv: SiOpencv,
+openai: SiOpenai,
+adobeillustrator: SiAdobeillustrator,
+adobephotoshop: SiAdobephotoshop,
+css3: SiCss3,
+html5: SiHtml5,
+jetbrains: SiJetbrains,
+androidstudio: SiAndroidstudio,
+ansys: SiAnsys,
+labview: SiLabview,
 };
 
 export type IconLibrary = typeof iconLibrary;
