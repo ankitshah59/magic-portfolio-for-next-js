@@ -1,0 +1,462 @@
+---
+title: "Realtime Equine Health Monitoring"
+publishedAt: "2024-04-03"
+summary: "Explore the enduring debate between using spaces and tabs for code indentation, and why this choice matters more than you might think."
+images:
+  - "/images/projects/project-01/horse1.jpg"
+  - "/images/projects/project-01/horse2.jpg"
+team:
+  - name: "Ankit Shah"
+    role: "Biomedical Engineer"
+    avatar: "/images/avatar.jpg"
+    linkedIn: "https://www.linkedin.com/company/once-ui/"
+link: "https://once-ui.com/"
+---
+# Wearable Smart Textile Band for Continuous Equine Health Monitoring
+
+**Purdue University** • *Biosensors and Bioelectronics, 2026*
+
+## Overview
+
+This study presents a **non-invasive, wireless smart textile band** designed specifically for continuous health monitoring in horses. The device tracks respiratory activity, cardiac function, and movement in real-time without requiring hair removal—addressing a critical gap in equine healthcare where nearly **80% of racehorses suffer from asthma** but lack practical long-term monitoring solutions.
+
+💡 **Key Innovation**: First field-deployable, hair-coat-tolerant wearable system for equines that enables continuous physiological monitoring during natural behavior, validated against clinical gold standards.
+
+---
+
+## The Problem
+
+### Equine Health Crisis
+
+**Respiratory Diseases:**
+- **80% of racehorses** affected by mild to moderate asthma
+- **14% of adult horses** in general population have asthma
+- Diminished athletic performance
+- Increased veterinary costs
+- Career-ending health complications
+
+**Cardiovascular Issues:**
+- Less prevalent but performance-impairing
+- Exercise-induced cardiac arrhythmias
+- Closely linked to respiratory function
+
+### Current Monitoring Limitations
+
+**Traditional Methods:**
+- Require restraining the animal (induces stress)
+- Periodic assessments miss transient abnormalities
+- Subjective observations (inconsistent)
+- Auscultation, ECG, endoscopy (invasive)
+- Delayed diagnoses
+
+**Existing Wearables:**
+- Require shaving hair (impractical)
+- Lack wireless functionality
+- Not portable or robust
+- Short-term clinical use only
+- Motion artifacts compromise signals
+
+**Critical Need:** Non-invasive, wireless, continuous monitoring for early detection and timely intervention in equines.
+
+---
+
+## System Design
+
+### Smart Textile Band Architecture
+
+**Core Components:**
+
+- **MEMS Microphone**: Respiratory sounds, Ultra-low noise (ICS-40720, TDK)
+- **3-axis Accelerometer**: Respiration + heartbeat vibrations, BMI 160 (Bosch)
+- **3-axis Gyroscope**: Movement tracking, Integrated with accelerometer
+- **Temperature Sensor**: Body temperature, Real-time monitoring
+- **BLE SoC**: Wireless data transmission, nRF52840 (Nordic)
+- **Battery**: Power supply, 150 mAh, 15+ hours operation
+
+**Key Innovation:** Uses **mechano-acoustic sensing** via accelerometer to capture both respiration and heart rate from local vibrations, without interference from global body movements.
+
+### Mechanical Design Features
+
+**Flexible PCB Structure:**
+- Three-layer stacked, three-island design
+- 32 active and passive components
+- Serpentine interconnectors for flexibility
+- Compatible textile band between layers 1 and 2
+
+**Encapsulation:**
+- Soft, waterproof elastomer (Ecoflex 00-35)
+- Protects electronics from sweat and environmental factors
+- Maintains flexibility and comfort
+
+**Adjustability:**
+- Size-adjustable textile band
+- Accommodates various equine body types
+- Secure fit without restricting movement
+- Can stretch and twist freely
+
+### Mechanical Validation
+
+**Finite Element Analysis:**
+- Maximum principal strain less than 1% under 10% stretching + twisting
+- Elastic modulus: 913 kPa (device-embedded textile) vs 689 kPa (bare textile)
+- Withstands up to 140% strain before breaking
+
+**Environmental Durability:**
+- Repeated saline solution exposure (simulates sweat)
+- Maintained full functionality under continuous flow
+- No signal degradation during extended use
+
+---
+
+## Technical Performance
+
+### Benchtop Validation
+
+**Vibration Response Testing:**
+
+- **0.13 Hz** (Low respiratory rate): 39.36 dB SNR
+- **0.27 Hz** (High respiratory rate): 36.32 dB SNR
+- **0.47 Hz** (Low heart rate): 35.73 dB SNR
+- **0.67 Hz** (High heart rate): 39.55 dB SNR
+
+**Key Finding:** System captures clear signals across entire physiological frequency range for equine respiration (0.13-0.27 Hz) and cardiac activity (0.47-0.67 Hz).
+
+### Signal Processing Methodology
+
+**Continuous Wavelet Transform:**
+- Analytic Morlet wavelet for time-frequency analysis
+- **Respiratory rate:** Frequencies below 0.5 Hz
+- **Heart rate:** Frequencies 5-15 Hz
+- 20-second non-overlapping windows for localized analysis
+
+**Peak Detection:**
+- Valley identification (breath cycles, heartbeats)
+- Dynamic threshold to minimize false detections
+- Conversion to BPM: 60 divided by Average Interval (seconds)
+
+**SNR Calculation:**
+- Power spectral density estimation
+- SNR in dB equals 10 times log₁₀ of signal power divided by noise power
+- Chest Z-axis acceleration for HR: 14.34 dB (sufficient for reliable detection)
+
+---
+
+## In Vivo Validation Results
+
+### Resting State Monitoring (30 Minutes)
+
+**Healthy Horse (16-year-old Standardbred):**
+
+**Respiratory Rate:**
+- Clinical equipment: 7.11 BPM
+- Flow sensor: 7.14 BPM
+- Microphone: 7.10 BPM
+- **Smart textile band (Z-axis): 7.04 BPM**
+
+**Heart Rate:**
+- ECG (gold standard): 34.64 BPM
+- **Smart textile band (Z-axis): 34.54 BPM**
+
+**Bland-Altman Analysis:**
+- RR mean difference: 0.06 BPM (deviation: 0.53 BPM)
+- HR mean difference: 0.10 BPM (deviation: 1.65 BPM)
+
+**Excellent agreement with clinical gold standards**
+
+---
+
+### Treadmill Exercise Testing
+
+**Exercise Protocol:**
+- Walking: 1.5 m/s for 15 min
+- Trotting: 4.5 m/s for 30 min
+- Walking: 1.5 m/s for 6 min
+
+**Respiratory Rate Results:**
+
+- **Walking (initial)**: Clinical 60.47 BPM, Flow 60.11 BPM, Textile 62.34 BPM
+- **Trotting**: Clinical 110.96 BPM, Flow 110.06 BPM, Textile 110.89 BPM
+- **Walking (recovery)**: Clinical 66.91 BPM, Flow 68.57 BPM, Textile 71.02 BPM
+
+**Heart Rate Results:**
+
+- **Walking (initial)**: ECG 59.09 BPM, Textile 58.94 BPM
+- **Trotting**: ECG 102.82 BPM, Textile 104.16 BPM
+- **Walking (recovery)**: ECG 72.73 BPM, Textile 75.08 BPM
+
+**Bland-Altman During Exercise:**
+- RR mean difference: 1.06 BPM (deviation: 4.39 BPM)
+- HR mean difference: 0.90 BPM (deviation: 4.49 BPM)
+
+**Signal Quality:**
+- Chest ECG SNR: 15.41 dB
+- Chest Z-axis acceleration SNR: 14.51 dB
+
+**Maintained accuracy during dynamic movement**
+
+---
+
+### Asthma Detection and Treatment Monitoring
+
+**Asthmatic Horse (18-year-old Tennessee Walker):**
+
+**Before Bronchodilator Administration:**
+
+**Respiratory Rate:**
+- Clinical equipment: 15.24 BPM
+- Flow sensor: 15.35 BPM
+- Smart textile band: 14.98 BPM
+
+**Heart Rate:**
+- ECG: 43.51 BPM
+- Smart textile band: 43.18 BPM
+
+**After Bronchodilator (N-butylscopolammonium bromide, 0.3 mg/kg IV):**
+
+**Respiratory Rate (decreased 4 BPM):**
+- Clinical equipment: 11.10 BPM
+- Flow sensor: 11.36 BPM
+- Smart textile band: 11.36 BPM
+
+**Heart Rate (increased 15 BPM):**
+- ECG: 58.27 BPM
+- Smart textile band: 58.30 BPM
+
+**Asthma Severity Indicators:**
+
+**Abdominal Movement Intensity:**
+- **Jerk (Z-axis acceleration gradient):** Decreased 36%
+- **Energy Expenditure (gyroscope RMS):** Decreased 44%
+- **Transpulmonary pressure:** Decreased 71% (85.97 to 25.30 cmH₂O)
+
+**Clinical Pulmonary Function Changes:**
+- Dynamic compliance (Cdyn): Increased
+- Lung resistance (Rl): Decreased
+- Peak flows (PIF/PEF): Improved
+- Tidal volume, minute ventilation: Normalized
+
+**Clinical Breakthrough:** First demonstration of wearable device detecting asthma severity and monitoring treatment response in real-time, non-invasively. The smart textile band successfully quantified the physiological changes characteristic of bronchodilator administration, matching clinical equipment accuracy.
+
+---
+
+### Free Movement Validation
+
+**Field Testing:**
+- Outdoor monitoring during natural behavior
+- Wireless data transmission: 5-10 m range (extendable to 120 m with Bluetooth bridge)
+- Successfully collected physiological data
+- 3D acceleration scatter plots enabled rapid behavior assessment
+
+**Demonstrated real-world applicability beyond controlled laboratory settings**
+
+---
+
+## Key Advantages
+
+### Hair-Coat Tolerance
+
+**Problem Solved:**
+- Traditional sensors require shaving (impractical, uncomfortable)
+- Affects animal appearance and welfare
+
+**Solution:**
+- Mechano-acoustic sensing penetrates hair coat
+- Accelerometer detects vibrations through fur
+- No skin contact required for respiratory/cardiac monitoring
+
+### Wireless and Portable
+
+**Specifications:**
+- Bluetooth Low Energy transmission
+- 15+ hours battery life (150 mAh, 9.82 mA average current)
+- Real-time data visualization
+- No tethered connections restricting movement
+
+### Multi-Parameter Monitoring
+
+**Simultaneous Measurements:**
+- Respiratory rate (breath-by-breath)
+- Heart rate (beat-to-beat)
+- Body temperature
+- Movement patterns (accelerometer + gyroscope)
+- Energy expenditure
+- Activity classification (walking, trotting, resting)
+
+### Clinical-Grade Accuracy
+
+**Validation Against Gold Standards:**
+- Ultrasonic phase-shift flowmeters (respiratory)
+- ECG (cardiac)
+- Esophageal balloon catheter (transpulmonary pressure)
+- Pneumotachometer (pulmonary function)
+
+**Bland-Altman Agreement:**
+- Resting: within 0.5 BPM (RR), within 1.7 BPM (HR)
+- Exercise: within 4.4 BPM (RR), within 4.5 BPM (HR)
+- Asthma: within 0.7 BPM (RR), within 1.9 BPM (HR)
+
+### Robust to Motion Artifacts
+
+**Challenge:** Movement during exercise obscures physiological signals
+
+**Solution:**
+- CWT filtering isolates specific frequency bands
+- Local vibration sensing (chest/abdomen) vs global movement
+- Maintained greater than 14 dB SNR during trotting (4.5 m/s)
+
+---
+
+## Clinical Applications
+
+### Equine Asthma Management
+
+**Early Detection:**
+- Identify subclinical respiratory changes before exacerbation
+- Track breathing pattern evolution as airway obstruction worsens
+- Alert veterinarians to early warning signs
+
+**Treatment Monitoring:**
+- Quantify bronchodilator efficacy in real-time
+- Optimize medication dosing
+- Prevent worsening airway obstruction from inadequate treatment
+- Continuous recovery assessment
+
+**Risk Stratification:**
+- 80% of racehorses affected leads to widespread screening potential
+- Identify horses needing intervention before performance decline
+
+### Performance Optimization
+
+**Athletic Monitoring:**
+- Racehorses, eventers, endurance horses
+- Track cardiovascular fitness over training cycles
+- Detect exercise-induced cardiac arrhythmias
+- Optimize training intensity based on physiological response
+
+**Fatigue and Stress Detection:**
+- Elevated respiratory/heart rates indicate stress
+- Activity-level changes signal fatigue or illness
+- Prevent overtraining and injury
+
+### Veterinary Diagnostics
+
+**Longitudinal Health Tracking:**
+- Replace periodic clinical assessments with continuous data
+- Detect transient abnormalities missed by spot checks
+- Build individual baselines for personalized medicine
+
+**Telemedicine Integration:**
+- Remote monitoring for horses in field/stable
+- Alert systems for abnormal patterns
+- Reduce need for invasive clinical procedures
+
+### Research Applications
+
+**Disease Mechanism Studies:**
+- Asthma pathophysiology
+- Exercise physiology
+- Cardiovascular adaptation
+- Circadian rhythm effects on health
+
+**Drug Development:**
+- Continuous efficacy monitoring
+- Dose-response relationships
+- Side effect detection
+
+---
+
+## Future Directions
+
+### Immediate Enhancements
+
+**Additional Biosensors:**
+- Blood oxygenation (SpO₂)
+- Hydration status (impedance/bioelectrical)
+- Cortisol levels (electrochemical sweat sensing)
+- Lactate monitoring (exercise physiology)
+
+**Extended Validation:**
+- Long-term wear studies (weeks to months)
+- Larger cohort sizes across breeds
+- Diverse environmental conditions
+- Comparison with commercial equine monitors
+
+**Algorithm Refinement:**
+- Machine learning for automated anomaly detection
+- Predictive models for asthma exacerbation
+- Activity classification (grazing, galloping, resting)
+- Individual baseline establishment
+
+### Advanced Applications
+
+**Early Disease Detection:**
+- Pre-clinical asthma identification
+- Cardiac arrhythmia screening
+- Upper airway obstruction patterns
+- Stress/anxiety quantification
+
+**Telemedicine Integration:**
+- Cloud-based veterinary dashboards
+- Automated alert systems for abnormal vitals
+- Remote consultation with real-time data sharing
+- Integration with electronic health records
+
+**Performance Analytics:**
+- Training load optimization
+- Race-day readiness assessment
+- Recovery monitoring post-exercise
+- Injury risk prediction
+
+**Breeding and Selection:**
+- Identify respiratory/cardiac traits
+- Select for athletic performance
+- Early screening of offspring
+
+### Broader Impact
+
+**Other Large Animals:**
+- Cattle (dairy production, heat stress)
+- Wildlife (conservation, migration studies)
+- Zoo animals (behavioral monitoring, welfare)
+- Working dogs (military, search-and-rescue)
+
+**Veterinary Ecosystem:**
+- Standardized monitoring protocols
+- Regulatory approval pathways
+- Veterinary training programs
+- Insurance integration (performance horses)
+
+**Technology Transfer:**
+- Human wearables (lessons from equine challenges)
+- Pediatric monitoring (non-invasive approach)
+- Elderly care (motion-tolerant sensors)
+
+---
+
+## Key Takeaways
+
+**Translational Success:** Established human wearable technologies successfully adapted for equine applications, demonstrating cross-species technology transfer.
+
+**Hair-Coat Tolerance is Critical:** Mechano-acoustic sensing through fur eliminates need for shaving—key enabler for real-world equine monitoring.
+
+**Clinical-Grade Validation Essential:** Rigorous comparison against gold-standard equipment (flowmeters, ECG, esophageal catheter) builds veterinary trust.
+
+**Asthma Detection Breakthrough:** First wearable demonstration of quantifying asthma severity and treatment response in horses non-invasively.
+
+**Multi-Parameter Synergy:** Simultaneous respiratory, cardiac, and movement data provides comprehensive health picture impossible with single-modality devices.
+
+---
+
+## Impact Statement
+
+This work introduces the first **field-deployable, hair-coat-tolerant wearable system** for continuous equine health monitoring, validated against clinical gold standards across healthy and asthmatic horses. By enabling **non-invasive, real-time detection** of respiratory and cardiac abnormalities during natural behavior, the smart textile band addresses a critical unmet need in veterinary medicine.
+
+The demonstrated ability to **quantify asthma severity and monitor treatment response** represents a significant advancement for the 80% of racehorses affected by this condition. Beyond equines, the principles established here—mechano-acoustic sensing through hair/fur, motion-artifact-resistant algorithms, and field-deployable design—have **broad applicability to other large animals and human populations** where traditional monitoring is impractical.
+
+---
+
+**Full Citation:** Park, T., Hong, S., Murray, L., Lee, J., Shah, A., Mesa, J.C., Lee, H., Couetil, L., & Lee, C.H. (2026). Wearable smart textile band for continuous equine health monitoring. *Biosensors and Bioelectronics*, 292, 118073.
+
+---
+
+**Technical Specifications:** MEMS microphone, 3-axis accelerometer, 3-axis gyroscope, temperature sensor • Bluetooth Low Energy, 5-120 m range • 150 mAh battery, 15+ hours • Waterproof Ecoflex encapsulation • Validated against flowmeters, ECG, pulmonary function testing

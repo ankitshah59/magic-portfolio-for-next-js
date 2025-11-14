@@ -1,0 +1,81 @@
+---
+title: "Chipless RFID for Medical Identity: Tagging Life-Saving Devices"
+summary: "How bent, flexible chipless RFID tags and a machine learning pipeline could help track every catheter from manufacturing to the operating room."
+publishedAt: "2025-11-13"
+tag: "RFID"
+image: "/images/gallery/smart7.png"
+---
+
+## Why Hospitals Need Chipless Tracking
+
+Every catheter has a lifecycle:
+
+1. manufacturing  
+2. sterilization  
+3. transport  
+4. procedure  
+5. disposal  
+
+Most hospitals track this manually.  
+Which means mistakes happen.
+
+Chipless RFID tags solve this with:
+
+- no chips  
+- no batteries  
+- low cost  
+- flexible geometries  
+- anti-counterfeiting capability  
+
+## My Tag Designs
+
+I use **rectangular uniplanar resonators** with slit openings.
+
+Each resonator → one notch in the frequency spectrum.  
+Combined → a unique binary ID.
+
+Even when the tag is:
+
+- bent  
+- twisted  
+- partially stretched  
+- printed on TPU  
+
+…the ML pipeline still identifies the correct ID.
+
+## The ML Decoder
+
+The system uses:
+
+- frequency dip extraction  
+- SVM + MLP + k-NN classifiers  
+- bent/distorted simulations  
+- annotated predictions  
+- confusion matrices  
+
+Here’s a tiny part of the feature extraction logic:
+
+<CodeBlock
+  codes={[
+    {
+      code:
+`def extract_notches(freq, mag):
+    # find dips in the RCS response
+    idx = signal.find_peaks(-mag, distance=50)[0]
+    return freq[idx]`,
+      language: "python",
+      label: "features.py"
+    }
+  ]}
+/>
+
+## Why This Belongs in Healthcare
+
+With chipless RFID:
+
+- every catheter has a digital identity  
+- every event is logged to blockchain  
+- hospitals get traceability  
+- patients get safer procedures  
+
+It's small tech — but big impact.

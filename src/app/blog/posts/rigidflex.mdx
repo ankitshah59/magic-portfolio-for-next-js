@@ -1,0 +1,100 @@
+---
+title: "Designing Rigid–Flex Wearable PCBs with the nRF52840 SoC"
+summary: "A practical guide to building ultra-compact, low-power wearable PCBs using Altium Designer and the nRF52840 wireless SoC."
+publishedAt: "2025-11-14"
+tag: "Hardware"
+image: "/images/gallery/rigidflex.jpg"
+---
+
+Wearables pack *a full computer* into a space smaller than a coin.  
+With SoCs like the **nRF52840**, every millimeter of layout matters.
+
+Here’s how I approach designing rigid–flex boards for rings, straps, catheters, and medical wearables.
+
+## Why Rigid–Flex?
+
+Rigid–flex offers:
+
+- **Rigid area** = MCU, power, radio  
+- **Flex area** = sensors, antenna, LEDs  
+- Bend radius matching your form factor  
+- Minimal wiring  
+- Shock resistance  
+
+For wearable applications, it’s not optional — it’s essential.
+
+## nRF52840: Perfect for Wearables
+
+- BLE 5.2  
+- 2.4 GHz radio with excellent sensitivity  
+- ARM Cortex-M4F processor  
+- USB, I²C, SPI, UART  
+- Extremely low power consumption  
+
+The chip delivers powerful processing while remaining battery-friendly.
+
+## Altium Tips for Rigid–Flex Wearables
+
+### 1. Define Layer Stacks Early
+
+Typical stacks I use:
+
+- **Rigid**: 4 layers  
+- **Flex**: 2 layers (PI substrate)  
+
+Keep copper thin in flex regions to allow smooth bending.
+
+### 2. Separate Digital and RF Zones
+
+For optimal radio performance:
+
+- Keep radio section away from switching regulators  
+- Avoid ground voids  
+- Match traces to the antenna feed  
+
+### 3. Antenna Choice Matters
+
+Options for tiny wearables:
+
+- Meandered inverted-F antenna (MIFA)  
+- Chip antenna (e.g., Johanson, 2.4 GHz)  
+- Flex antenna  
+
+Always tune with a **Pi matching network**.
+
+### 4. Flex Trace Rules
+
+- Use curved traces  
+- Avoid vias where possible  
+- Stagger pads  
+- Maintain 45° trace transitions  
+
+### 5. Battery and Power Management
+
+Small Li-ion or LiPo battery with:
+
+- BQ2407x charger  
+- TPS62740 buck converter (if needed)  
+
+Optimized sleep mode can yield **weeks of runtime**.
+
+## Typical Wearable Architecture
+
+<CodeBlock
+  codes={[{
+    code:
+`nRF52840 SoC
+|-- BLE
+|-- 3x IMU
+|-- PPG or temperature sensor
+|-- Flex antenna
+|-- Battery + charger`,
+    language: "txt",
+    label: "wearable-architecture"
+  }]}
+/>
+
+## Final Thoughts
+
+Rigid–flex PCB design is engineering origami at its finest.  
+Altium makes it surprisingly intuitive once you understand bend regions, layer stacks, and RF hygiene.

@@ -1,0 +1,92 @@
+---
+title: "Designing Electronics on Catheters: Behind My Rotary 3D Printing System"
+summary: "A deep dive into the precision engineering challenges behind printing functional electronics directly onto small-diameter catheters."
+publishedAt: "2025-11-13"
+tag: "Engineering"
+image: "/images/projects/project-01/smart5.png"
+---
+
+## Rethinking How Electronics Are Printed
+
+Printing electronics on **3 mm diameter medical catheters** is not just challenging—it forces you to rethink motion control, deposition physics, and material behavior at micro-scales.
+
+During my PhD, I built a **rotary 3D printing system** from the ground up using:
+
+- A rotating print bed  
+- A micro-dispensing print head  
+- Real-time height correction using a Keyence confocal sensor  
+- A C# GUI built using the Thorlabs Kinesis SDK  
+- Custom G-code motion planning  
+
+What started as an experiment has evolved into a platform for printing **strain sensors, temperature sensors, microheaters, chipless RFID, and even CNT/PEDOT:PSS composites**—all directly on curved, flexible surfaces.
+
+## Precision in Motion Control
+
+The biggest challenge wasn’t electronics—it was motion.
+
+I needed sub-100-micron accuracy across rotation, X-axis travel, and Z-axis height.  
+So I developed a motion pipeline that converts G-code into synchronized commands for:
+
+- Rotary axis (θ)  
+- Linear X  
+- Vertical Z  
+
+Here’s a small example of how coordinate parsing is handled:
+
+<CodeBlock
+  marginBottom="16"
+  codes={[
+    {
+      code:
+`const move = (line: string) => {
+  const x = getCoord(line, "X");
+  const z = getCoord(line, "Z");
+  const r = getCoord(line, "R"); // rotary axis
+
+  if (x !== null) stageX.MoveTo(x);
+  if (z !== null) stageZ.MoveTo(z);
+  if (r !== null) rotary.MoveTo(r);
+};`,
+      language: "tsx",
+      label: "motion-control.ts"
+    }
+  ]}
+/>
+
+This system lets me print continuous serpentine traces on curved catheters without stretching, misalignment, or flow instability.
+
+## Materials That Behave Differently on Curved Surfaces
+
+Printing on a cylinder changes everything: viscosity, shear forces, curing, and wetting dynamics all shift.
+
+Some examples:
+
+- **CNT + Ecoflex** mixes behave nonlinearly under strain → perfect for soft strain sensors.  
+- **CNT + PEDOT:PSS** composites show a negative TCR → ideal for temperature sensing.  
+- **AgNP inks** provide low-resistance pathways for microheaters.  
+
+Even tiny variations in nozzle-to-surface distance changed the outcome, which is why the **10 kHz confocal feedback loop** was essential.
+
+## Applications That Inspired the System
+
+The system wasn't built for a single device—it was built for an ecosystem of smart medical tools:
+
+- Catheters with embedded **printed strain sensors** for mechanical feedback  
+- Microheaters for **hyperthermia therapy** and **drug release**  
+- Printed temperature sensors for **continuous thermal monitoring**  
+- Passive RF components and **chipless RFID** for medical data tracing  
+- Secure blockchain logging for lifecycle tracking  
+
+This is what the future of minimally invasive medical electronics looks like.
+
+## What’s Next
+
+I'm extending the platform to support:
+
+- Multi-material printing  
+- Real-time AI-based motion correction  
+- Automated electrical characterization  
+- Implantable microfluidic channels with sensing layers  
+
+I’ll share more technical deep-dives soon—including full breakdowns of the control algorithms, G-code interpreter, confocal feedback loop, and printing physics.
+

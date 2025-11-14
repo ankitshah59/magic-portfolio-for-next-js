@@ -1,0 +1,95 @@
+---
+title: "What GUI Framework Should You Use for Your Hardware Projects?"
+summary: "A practical guide to choosing the right UI/UX tools for embedded systems, robotics, sensors, and hardware control applications."
+publishedAt: "2025-11-14"
+tag: "Engineering"
+image: "/images/gallery/frameworks.jpg"
+---
+
+Most hardware engineers struggle more with **GUIs** than with electronics.
+
+I’ve built dozens of:
+
+- Sensor dashboards  
+- Robotics control panels  
+- Medical device UIs  
+- Serial/BLE interfaces  
+- Custom software for printers & lab tools  
+
+Here’s the framework selection guide I personally use.
+
+## Desktop GUIs (Lab Equipment, CNC, Robots)
+
+**Tkinter (Python)**  
+- Easiest to get started  
+- Great for students  
+- Functional, not flashy  
+
+**PyQt / PySide**  
+- Professional-grade  
+- Cross-platform  
+- Perfect for instrument control  
+
+**Electron or Tauri**  
+- Modern, web-style desktop apps  
+- Ideal for polished UIs  
+
+**C# WinForms / WPF**  
+- Best for hardware via USB/serial  
+- Works with Kinesis SDK, NI devices, lab instruments  
+- I personally used **C# + WPF** for my rotary 3D printer GUI  
+
+## Mobile GUIs (Wearable Dashboards, BLE Control)
+
+- **React Native** → Fast to build, great BLE libraries  
+- **SwiftUI** → Best UX for iPhone-only apps  
+- **Android Studio (Kotlin)** → Full hardware API access  
+
+Use mobile apps when your device communicates via:
+
+- BLE  
+- WiFi  
+- NFC  
+- Cloud APIs  
+
+## Web GUIs (Dashboards, ML Analytics, Logging)
+
+- **React + Next.js** → Ideal for dashboards, easy chart integration  
+- **SvelteKit** → Extremely fast, lightweight  
+- **Streamlit / Gradio** → Rapid ML prototypes, build UIs in minutes  
+
+Web dashboards excel at visualizing sensor data, like RFID signals, strain sensors, or microheater curves.
+
+## Embedded GUIs (On-Device Screens)
+
+Use for small TFT/OLED displays:
+
+- **LVGL (C/C++)**  
+- **LittlevGL**  
+- **TouchGFX**  
+
+These frameworks provide a “consumer-device” feel on microcontrollers.
+
+## My Recommendations by Project
+
+| Project Type             | Best GUI                  |
+|---------------------------|---------------------------|
+| Custom 3D printer         | C# WPF / Qt              |
+| Sensor streaming          | Python + PyQt            |
+| Medical dashboard         | React / Next.js          |
+| Wearable companion app    | React Native             |
+| Production robotics       | C# / C++                 |
+| Quick ML prototype        | Streamlit / Gradio       |
+| On-device UI              | LVGL                     |
+
+## Final Thoughts
+
+Choose a GUI framework based on:
+
+- Your hardware interface  
+- Deployment platform  
+- Speed of development  
+- Visual requirements  
+
+Good UIs aren’t about beauty — they’re about *clarity* and *control*.  
+Don’t overthink it; pick the tool that lets you iterate quickly.
