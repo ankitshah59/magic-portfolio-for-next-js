@@ -1,6 +1,6 @@
 ---
 title: "Building of The state of the Art Catheter Printer"
-publishedAt: "2024-04-08"
+publishedAt: "2025-11-14"
 summary: "Development of a high resolution rotary 3D printer that can print on flexible catheter surface with realtime surface mapping and adaptability to print smart electronics."
 images:
   - "/images/projects/project-01/catheter1.png"
@@ -15,28 +15,443 @@ team:
 link: "https://github.com/ankitshah59/3D_Bioprinter"
 ---
 
+# Building of The State-of-the-Art Rotary Catheter Printer
+
 ## Overview
 
-Development of a flexible and highly customizable design system using Next.js for front-end and Figma for design collaboration.
+The rotary catheter printer is a **closed-loop, height-compensated direct-ink-writing (DIW) system** developed to print smart electronics directly onto soft, flexible catheter bodies. Unlike planar printing or film-wrapping techniques, this system performs **true conformal printing** on cylindrical surfaces, enabling 360° coverage with sub-100 μm resolution.
 
-## Key Features
+At its core, the system synchronizes a **motorized rotational stage**, orthogonal **X and Z linear axes**, and a **high-speed confocal displacement sensor** to maintain a stable nozzle-to-surface distance during printing—essential for clean, high-resolution features on deformable substrates.
 
-- **Component Library**: Built a set of modular, reusable UI components using React and styled-components in Next.js, focusing on accessibility and responsiveness.
-- **Theming and Customization**: Integrated a theming system that allows easy switching and customization of color palettes, typography, and layout styles using CSS variables and Figma tokens.
-- **Figma Integration**: Collaborated closely with designers by setting up a shared design library in Figma. This library was synchronized with the codebase, ensuring design handoffs were seamless and that design tokens remained consistent across both platforms.
-- **Documentation and Usage Guidelines**: Developed comprehensive documentation with Storybook to showcase components, usage patterns, and best practices, ensuring the design system is easy to adopt by other teams.
+---
 
-## Technologies Used
+## State of the Art
 
-- **Next.js**: For fast, server-rendered React applications.
-- **Figma**: For creating and managing design assets and prototypes.
-- **Styled-Components**: For styling React components with a modular, themable approach.
-- **Storybook**: For building an interactive, documented component library.
+### Current Limitations
 
-## Challenges and Learnings
+Conventional catheter electronics rely on **flat-film microfabrication**, which must then be wrapped or adhered, causing:
 
-One key challenge was balancing the need for flexibility with the desire to maintain design consistency. The solution involved creating well-defined design tokens and establishing clear guidelines for when and how components could be customized. Additionally, setting up effective collaboration workflows between designers and developers using Figma and Git was a learning experience that greatly improved the process.
+- **Delamination during flexing**: Poor long-term adhesion
+- **Poor conformity to complex geometries**: Limited design flexibility
+- **Mechanical mismatch and adhesive creep**: Reliability issues
+- **Lengthy, multi-step fabrication processes**: High manufacturing costs
 
-## Outcome
+While aerosol jet and inkjet methods can print on some curved surfaces, they often fail to compensate for dynamic height changes and struggle with high-viscosity conductive inks.
 
-The design system is now actively used across multiple projects, leading to faster development cycles, fewer design inconsistencies, and improved collaboration between design and development teams. It has become a foundation for scaling our products efficiently while ensuring a cohesive user experience.
+### Key Innovations
+
+This platform advances the field with:
+
+- **Real cylindrical-coordinate DIW**: True rotary printing
+- **Real-time 10 kHz optical height sensing**: Sub-micron precision
+- **True closed-loop Z-axis correction**: PID-controlled
+- **High-viscosity ink printing**: Ag-TPU, CNT composites, PEDOT:PSS
+- **Uniform features even on balloons and expanding structures**: Dynamic compensation
+
+💡 **Breakthrough**: One of the **first fully-integrated, PID-controlled DIW systems** built specifically for medical-grade catheter manufacturing.
+
+---
+
+## Hardware Architecture
+
+### 1. Rotary θ-Stage (PRM1Z8)
+
+A precision Thorlabs **PRM1Z8** rotation stage holds the catheter concentrically and acts as the Y-axis replacement. Angular velocity is computed and updated in real time to match linear feed rates.
+
+**Specifications:**
+- Angular resolution: **0.0008°**
+- Concentricity control: Near-zero runout
+- Real-time velocity matching
+
+### 2. Dual Linear Axes (LTS150 X and Z)
+
+**X-axis:** Longitudinal nozzle motion  
+**Z-axis:** Closed-loop height correction (PID)
+
+Both axes use Thorlabs **LTS150** linear stages, providing micron-level motion resolution.
+
+**Specifications:**
+- Linear accuracy: **±1 μm**
+- Travel range: 150 mm
+- Maximum velocity: 50 mm/s
+
+### 3. Confocal Height Sensor (Keyence CL-3000)
+
+A **CL-P030 confocal probe**, positioned approximately 5 mm ahead of the nozzle, provides:
+
+- Real-time distance mapping
+- Surface curvature tracking
+- High-speed sampling (up to 10 kHz capability)
+
+**Performance:**
+- Sampling rate: **10 kHz**
+- Measurement range: 10 mm
+- Resolution: **0.01 μm**
+
+### 4. Pneumatic Ink-Extrusion System
+
+The **Nordson Ultimus V** regulates ink flow (0–800 kPa) and ensures smooth, stable deposition for functional inks with viscosities up to 5000 cP.
+
+**Features:**
+- Pressure range: 0–800 kPa
+- TTL gating control
+- Motion-synced extrusion
+- Preset material profiles
+
+### 5. Custom Catheter Mounts and Preparation
+
+- Plasma-treated surfaces for improved wetting
+- Custom mandrels with adjustable concentricity
+- Near-zero runout during rotation
+- Compatible with various catheter diameters (1-10 mm)
+
+---
+
+## Precision and Capability
+
+### Optical Height Compensation
+
+**Real-time tracking performance:**
+- Confocal sampling: **up to 10 kHz**
+- PID-controlled Z-axis feedback
+- Maintains **50 μm standoff** with **±5 μm error**
+
+**Handles dynamic challenges:**
+- Catheter sagging during rotation
+- Diameter inconsistencies along length
+- Balloon inflation/deflation dynamics
+- Surface roughness variations
+
+### Printing Resolution
+
+**Feature dimensions:**
+- Line width: **approximately 50 μm** (PEDOT:PSS/CNT)
+- Metallic traces: **60–120 μm** (Ag-TPU / Ag-NP)
+- Layer thickness: **20–40 μm**
+- Angular precision: **0.007°**
+- Linear accuracy: **1 μm** (LTS150 specification)
+
+**Print quality:**
+- Uniform trace width across 360° rotation
+- Minimal line edge roughness
+- Consistent layer-to-layer registration
+- Repeatable feature reproduction
+
+### Multifunctional Printing
+
+The system supports deposition of:
+
+- **Strain sensors**: Piezoresistive composites
+- **Temperature sensors**: IDC + polymer composites
+- **Microheaters**: Resistive heating elements
+- **Chipless RFID tags**: Resonator arrays
+- **Conductive interconnects**: Multi-layer routing
+- **Dielectric encapsulation layers**: Device protection
+
+**Material compatibility:**
+- Ag-TPU (silver-thermoplastic polyurethane)
+- Ag-NP (silver nanoparticles)
+- PEDOT:PSS (conducting polymer)
+- CNT composites (carbon nanotube)
+- Dielectric polymers
+
+---
+
+## Software Architecture: LIMR System
+
+**LIMR — Lathe-based Intelligent Micro-dispensing and Registration**
+
+A custom C# WinForms control application integrating:
+
+- **Thorlabs Kinesis SDK**: X, Z, θ motion control
+- **Keyence sensor communication**: Real-time height data
+- **PID Z-axis controller**: Closed-loop compensation
+- **G-code interpreter for cylindrical printing**: Path planning
+- **Pneumatic pressure and trigger control**: Synchronized extrusion
+
+### Cylindrical G-Code Transform
+
+LIMR converts linear paths into circumferential motion:
+
+**Transformation equations:**
+```
+theta = distance_mm / catheter_radius_mm
+omega = linear_speed_mm_per_s / catheter_radius_mm
+```
+
+This ensures that straight lines remain straight when the catheter is "unwrapped."
+
+**Path optimization:**
+- Minimal theta reversals
+- Smooth velocity profiles
+- Continuous extrusion paths
+- Optimized layer transitions
+
+### Adaptive Print Algorithms
+
+**Real-time compensation:**
+- Height-based Z compensation
+- Noise-filtered surface averaging
+- Auto-leveling across catheter length
+- Overshoot minimization
+- Command pre-buffering for motion stability
+
+**Quality control:**
+- Surface mapping pre-scan
+- Defect detection
+- Automatic retry on failure
+- Post-print verification
+
+---
+
+## System Development Process
+
+### 1. Mechanical Prototyping
+
+Precision jigs ensured proper alignment of X, Z, and θ axes, with custom fixtures to minimize eccentricity.
+
+**Design considerations:**
+- Orthogonal axis alignment (less than 0.1° deviation)
+- Vibration isolation platform
+- Thermal stability (temperature-controlled environment)
+- Rigid frame construction (aluminum extrusion)
+
+### 2. Sensor–Nozzle Offset Calibration
+
+The confocal probe's offset from the nozzle was measured and integrated as a calibration matrix inside LIMR.
+
+**Calibration procedure:**
+- Reference surface measurement
+- Nozzle contact detection
+- Offset calculation and storage
+- Periodic re-calibration verification
+
+### 3. Ink Rheology Tuning
+
+Ag-TPU, Ag-NP, PEDOT:PSS, and CNT formulations were optimized (150–5000 cP) with plasma surface prep improving adhesion.
+
+**Optimization parameters:**
+- Viscosity matching to pressure
+- Shear-thinning behavior
+- Nozzle diameter selection (100-400 μm)
+- Print speed adjustment
+- Surface energy matching
+
+### 4. Closed-Loop PID Tuning
+
+**Performance metrics achieved:**
+- Settling time: **less than 80 ms**
+- Overshoot: **less than 2 μm**
+- Stable tracking: **±5 μm** variation
+
+**Tuning methodology:**
+- Ziegler-Nichols initial parameters
+- Manual fine-tuning for damping
+- Step response testing
+- Frequency response analysis
+
+### 5. Full Automation
+
+**User interface features:**
+- Material presets (ink-specific parameters)
+- One-click printing workflow
+- Optional pre-scan surface mapping
+- Reproducible full-catheter prints
+- Real-time monitoring dashboard
+
+---
+
+## Applications and Performance
+
+### Strain Sensors
+
+**Printed configurations:**
+- Malecot wing strain gauges
+- Balloon segment sensors
+- Catheter shaft flex monitoring
+
+**Performance:**
+- Drift: **less than 10%** across 20–50 cycles
+- Gauge factor: 2-15 (material dependent)
+- Response time: less than 50 ms
+- Linear range: 0-30% strain
+
+### Temperature Sensors
+
+**Design:**
+- IDC electrodes + PEDOT:PSS/CNT composite
+- Two-terminal resistance measurement
+
+**Performance:**
+- TCR: approximately **–0.6% per °C**
+- Temperature range: 25–45°C
+- Resolution: 0.1°C
+- Response time: less than 2 seconds
+
+### Microheaters
+
+**Configuration:**
+- Ag-TPU serpentine heaters
+- Resistive heating via Joule effect
+
+**Performance:**
+- Temperature: **approximately 55°C at 7 V**
+- Heating time: 1.6 seconds
+- Cooling time: 4.2 seconds
+- Power consumption: less than 2 W
+- Uniform heating across serpentine pattern
+
+### Chipless RFID Tags
+
+**Design:**
+- 5-bit resonator arrays
+- Machine learning classification
+
+**Performance:**
+- Identification accuracy: **greater than 95%**
+- Read range: up to 30 cm
+- Blockchain-integrated tracking
+- Unique device identification
+
+---
+
+## Advanced Motion Control and PID Architecture
+
+### Closed-Loop Z Axis
+
+**Control system:**
+- **Input**: Keyence confocal readings (10 kHz)
+- **Controller**: C# PID implementation
+- **Output**: LTS150 Z-stage movement commands
+
+**Signal processing:**
+- 5-point moving average filter
+- Confidence threshold for spike removal
+- Outlier rejection algorithm
+- Adaptive gain scheduling
+
+**PID parameters:**
+- Proportional gain (Kp): Tuned per material
+- Integral gain (Ki): Minimizes steady-state error
+- Derivative gain (Kd): Reduces overshoot
+- Update rate: 1 kHz
+
+### Thorlabs Kinesis Integration
+
+**LTS150 (X and Z axes):**
+
+Key commands:
+- `MoveTo(position)`: Absolute positioning
+- `SetVelocity(velParams)`: Speed control
+- `GetPosition()`: Real-time feedback
+- `Home()`: Reference initialization
+
+**PRM1Z8 (θ-axis):**
+- Resolution: **0.0008°**
+- Velocity matching to linear speed
+- Computed per G-code segment
+- Synchronized with X-axis motion
+
+### Pneumatic Control Integration
+
+**Nordson Ultimus V control:**
+- TTL gating signals
+- Pressure presets per material
+- Motion-synced extrusion start/stop
+- Purge and prime sequences
+
+**Synchronization:**
+- Extrusion triggers at motion start
+- Pressure ramp-up compensation
+- Flow stabilization delay
+- Clean start/stop transitions
+
+---
+
+## LIMR Software Components
+
+**Core modules:**
+
+- **MotionEngine.cs**: Coordinate motion control, path planning
+- **SensorEngine.cs**: Keyence communication, data acquisition
+- **PIDController.cs**: Closed-loop Z-axis compensation
+- **GCodeCylinderInterpreter.cs**: Cylindrical path conversion
+- **DispenserController.cs**: Pneumatic pressure management
+- **PrintScheduler.cs**: Job queue, multi-layer sequencing
+
+**User interface:**
+- Real-time visualization of print progress
+- Live sensor data display
+- Manual jog controls
+- Material library management
+- Print parameter optimization tools
+
+---
+
+## System Performance Summary
+
+**Precision metrics:**
+- Z-axis tracking error: ±5 μm
+- Line width variation: less than 10%
+- Layer registration: less than 20 μm
+- Angular positioning: 0.007° accuracy
+
+**Throughput:**
+- Full catheter print time: 15-45 minutes (design dependent)
+- Multi-layer capability: up to 5 layers tested
+- Continuous operation: greater than 8 hours (limited by ink reservoir)
+
+**Reliability:**
+- Print success rate: greater than 90%
+- Sensor drift: Negligible over 8-hour sessions
+- Mechanical repeatability: ±2 μm
+
+---
+
+## Outcome and Impact
+
+The rotary catheter printer introduces a **new manufacturing paradigm for smart medical devices**:
+
+**Technical achievements:**
+- Full-surface functional printing on cylindrical substrates
+- Precise closed-loop adaptive control with sub-10 μm accuracy
+- Robust multi-material integration (conductors, semiconductors, dielectrics)
+- Reliable, high-resolution, conformal electronics manufacturing
+
+**Clinical potential:**
+- Catheters that **sense** (strain, temperature, pressure)
+- Catheters that **actuate** (heating, drug delivery triggers)
+- Catheters that **monitor** (continuous physiological data)
+- Catheters that **self-identify** (RFID tracking, anti-counterfeiting)
+
+**Manufacturing advantages:**
+- Single-step device fabrication
+- Reduced assembly complexity
+- Improved device reliability
+- Lower production costs at scale
+- Customizable per-patient designs
+
+This work establishes the foundation for next-generation smart catheters with **integrated sensing, actuation, and identification capabilities**—all printed directly onto their surfaces with micron-scale precision.
+
+---
+
+## Future Directions
+
+**Near-term enhancements:**
+- Automated catheter loading and alignment
+- Multi-nozzle printing for faster throughput
+- In-situ electrical testing during printing
+- Expanded material library (biocompatible inks)
+
+**Long-term vision:**
+- Clinical translation and regulatory approval
+- Integration with catheter manufacturing pipelines
+- Personalized device printing (patient-specific geometries)
+- Closed-loop biomedical sensing networks
+
+---
+
+**Project Lead:** Ankit Shah, Biomedical Engineer  
+**Institution:** Purdue University  
+**GitHub Repository:** [3D Bioprinter](https://github.com/ankitshah59/3D_Bioprinter)  
+**LinkedIn:** [Ankit Shah](https://www.linkedin.com/in/anki-tech/)

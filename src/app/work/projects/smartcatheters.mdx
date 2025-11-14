@@ -1,6 +1,6 @@
 ---
 title: "Smart Catheters"
-publishedAt: "2024-04-01"
+publishedAt: "2025-11-10"
 summary: "Explore the applications of smart cathteter made possible using our state of the art Catheter Printer!"
 images:
   - "/images/projects/project-01/smart1.png"
@@ -12,35 +12,849 @@ team:
     role: "Biomedical Engineer"
     avatar: "/images/avatar.jpg"
     linkedIn: "https://www.linkedin.com/company/once-ui/"
-link: "https://once-ui.com/"
 ---
 
-## Overview
+# Smart Catheter Manufacturing: Rotary 3D Printing Platform
 
-In this project, I focused on automating the often tedious design handover process. The goal was to create a pipeline that converts Figma designs directly into clean, production-ready code. By integrating design tokens, component libraries, and automated workflows, this solution significantly reduced the time spent on translating design assets into code, while maintaining design consistency across the product.
+**Purdue University** • *Science Robotics (Under Review), 2025*
 
-## Key Features
+## Executive Summary
 
-- **Figma Plugin Integration**: Developed a custom Figma plugin that extracts design tokens such as colors, typography, and spacing values, and exports them in a format compatible with our codebase.
-- **Code Generation**: Integrated an automated process that translates Figma components into React code using a combination of design tokens and pre-built component templates. This allowed developers to focus more on logic and less on repetitive UI coding.
-- **Continuous Sync**: Established a CI/CD pipeline that continuously synchronizes design changes from Figma to the codebase, ensuring design updates are reflected instantly without manual intervention.
-- **Scalable Design System**: Leveraged a design system that remains the single source of truth for both designers and developers, making it easy to maintain consistency even as the product evolves.
+We present a **height-compensated rotary 3D printing platform** that directly writes electronic sensors and functional components onto soft, medical-grade catheters. This system transforms passive tubes into intelligent medical devices capable of **real-time physiological monitoring**, **localized therapy delivery**, and **secure blockchain-based tracking**.
 
-## Technologies Used
-
-- **Figma API**: For extracting design tokens and component data directly from the Figma designs.
-- **React and Next.js**: For building the front-end codebase with clean, reusable components.
-- **Styled-Components**: For managing styles dynamically using design tokens.
-- **GitHub Actions**: For automating the pipeline and syncing design changes to the repository.
-
-## Challenges and Learnings
-
-One of the biggest challenges was ensuring that the generated code was clean and maintainable. This involved setting up intelligent mapping between Figma components and React code structures, as well as managing edge cases like responsive design and conditional rendering. Additionally, the continuous synchronization required a robust error-handling system to prevent conflicts during development.
-
-## Outcome
-
-The automated Figma to code pipeline has streamlined the handoff process, cutting down design-to-development time by 40%. Designers now have more confidence that their designs will be accurately translated into code, and developers can focus on more complex logic and feature development. This project has proven the value of automation in bridging the gap between design and development.
+💡 **Key Innovation**: First closed-loop direct ink writing system specifically engineered for conformal printing on deformable cylindrical substrates with sub-100 μm resolution and real-time height compensation.
 
 ---
 
-This project demonstrates your ability to leverage automation and streamline workflows, which is highly relevant for design engineering portfolios focused on efficiency and innovation.
+## The Problem: Why Current Catheters Fall Short
+
+### Clinical Need
+
+Catheters are foundational tools in minimally invasive medicine:
+- **Cardiac catheterization**: Coronary artery evaluation
+- **Vascular surgery**: Stent placement
+- **Oncology**: Localized drug delivery
+- **Urology**: Drainage and monitoring
+
+**Critical Gap**: Most catheters remain fundamentally **passive conduits** lacking sensing or actuating functions, limiting their ability to provide real-time feedback or adapt to physiological conditions.
+
+### Limitations of Current Approaches
+
+**Traditional Planar Microfabrication:**
+- Electronics fabricated on flat films via photolithography
+- Films wrapped or bonded onto curved catheter surfaces
+- **Major problems:**
+  - Delamination during bending/inflation
+  - Buckling and creasing under strain
+  - Stress concentrations causing sensor failure
+  - Poor conformity to small-diameter catheters (2-6 mm)
+  - Intermediate adhesives create failure points
+  - Labor-intensive multi-step assembly
+  - Difficult to scale for manufacturing
+
+**Existing Printed Solutions:**
+- **Aerosol jet printing**: Non-contact but requires specialized atomizers, limited material range
+- **Inkjet printing**: Fine features but struggles with high-viscosity inks
+- **Open-loop systems**: Assume idealized cylindrical substrates, fail with real-world irregularities
+- **Commercial 6-axis robots**: Complex setup, limited to 180° surface coverage, requires rigid substrates
+
+**The Core Issue**: No practical system exists for conformal, high-fidelity printing on flexible, deformable cylindrical medical devices.
+
+---
+
+## Our Solution: Closed-Loop Rotary Printing
+
+### System Architecture
+
+**Motion Control:**
+- **Theta-axis (PRM1Z8)**: Precision rotation stage (0.0008° resolution) replaces Y-axis
+- **X-axis (LTS150)**: Longitudinal translation (±1 μm accuracy)
+- **Z-axis (LTS150)**: Real-time height adjustment with PID control
+- **Cylindrical coordinate transformation**: θ-rotation synchronized with X-Z motion
+
+**Real-Time Height Sensing:**
+- **Keyence CL-3000 confocal sensor**: 10 kHz sampling rate, 0.25 μm resolution
+- Positioned 5 mm ahead of print nozzle
+- Continuously scans surface topography during printing
+- Detects bumps, bends, diameter changes in real-time
+
+**Closed-Loop Feedback:**
+- PID controller adjusts Z-axis to maintain constant 50 μm standoff
+- Response time: Less than 80 ms with less than 2 μm overshoot
+- Compensates for ±100 μm height variations without disrupting print
+- Accounts for catheter sagging, eccentricity, balloon inflation dynamics
+
+**Pneumatic Extrusion:**
+- Nordson EFD Ultimus V dispenser (0-800 kPa, 1 kPa resolution)
+- Compatible with viscosities: 150-5000 cP
+- Interchangeable nozzles: 21-32 gauge (customizable line width)
+
+**LIMR Software** (Lathe-based Intelligent Microdispensing and Registration):
+- Custom C# interface for cylindrical G-code interpretation
+- Real-time motion synchronization across all axes
+- Automated surface pre-scanning and height mapping
+- Material presets for different inks
+
+---
+
+## Printing Capabilities
+
+### Resolution and Precision
+
+**Feature Dimensions:**
+- **Minimum line width**: 50 ± 5 μm (PEDOT:PSS + CNT ink)
+- **Metallic traces**: 60 ± 5 μm (Ag nanoparticle ink)
+- **Trace thickness**: 20-40 μm per layer (adjustable)
+- **Layer registration**: Less than 20 μm accuracy
+- **Angular precision**: 0.007° (hardware specification)
+- **Linear precision**: 1 μm (hardware specification)
+
+**Pitch Accuracy:**
+
+**Tangential orientation (around circumference):**
+- 50 μm designed → 50.8 ± 5 μm measured
+- 100 μm designed → 99.7 ± 4 μm measured
+
+**Longitudinal orientation (along axis):**
+- 50 μm designed → 49.9 ± 3 μm measured
+- 100 μm designed → 99.5 ± 4 μm measured
+
+**Multi-Layer Printing:**
+- Successfully demonstrated 5-layer structures
+- 20 μm Z-axis increments between layers
+- Consistent height profile within 100 μm tolerance
+- Smooth interfaces without delamination
+
+### Print Quality Advantages
+
+**vs. Commercial 3D Printers:**
+- **Our system**: Continuous height scanning with smooth positioning
+- **Commercial (Nordson EFD)**: Repeated 90° nozzle lifting every 20 μm
+- **Result**: Our prints show clean edges, no smudging, uniform trace quality
+
+**360° Coverage:**
+- Full circumferential printing without manual intervention
+- No damage to previously printed features
+- Single-pass complete device fabrication
+
+### Parameter Optimization
+
+**Design of Experiments:**
+- **Variables**: Print speed, extrusion pressure, nozzle diameter, standoff height
+- **Trace width control**: 105-378 μm range (pressure 100-400 kPa at 5 mm/s)
+- **Speed-width relationship**: Inverse correlation (higher speed → narrower lines)
+- **Optimal parameters**: 10 mm/s, 200 kPa, 27-gauge nozzle for 100 μm features
+
+**Recommended Print Angles:**
+- **90° angle**: Best for high-resolution, continuous prints
+- **45° angle**: Good resolution with improved ink flow stability
+
+---
+
+## Materials and Inks
+
+### Conductive Inks
+
+**1. Silver-TPU (Ag-TPU) Composite**
+
+**Formulation:**
+- 14 g silver flakes + 1.5 g TPU pellets (Elastollan 60A)
+- Solvents: 3.8 mL THF + 4 mL DMF
+- Mixing: Planetary centrifugal mixer (2000 rpm, 5 min)
+
+**Processing:**
+- Intense pulse sintering: 22 J/cm² for 10 min
+- Thermal curing: 80°C for 10 min
+- Enhanced conductivity after processing
+
+**Properties:**
+- Viscosity: 1000-3000 cP
+- Stretchable and flexible
+- Good adhesion to silicone and TPU substrates
+- Suitable for microheaters and interconnects
+
+**2. Silver Nanoparticle Ink**
+
+**Commercial source**: Sigma-Aldrich, Nova Centrix PSI-211
+- Particle size: approximately 20 nm
+- Conductivity: 38% of bulk silver
+- Curing: 80°C
+- **Applications**: High-resolution features, RFID resonators
+- **Note**: Future recommendation to use copper or gold nanoparticle inks for higher conductivity (10⁶-10⁷ S/m)
+
+**3. CNT/Ecoflex Composite (Piezoresistive)**
+
+**Formulation:**
+- Multi-wall carbon nanotubes (MWCNT): 0.5% w/v
+- Ecoflex 00-30 silicone (Part A + Part B + Thinner, 1:1:1 by weight)
+- Viscosity: approximately 5000 cP
+
+**Properties:**
+- Highly stretchable (greater than 100% strain)
+- Piezoresistive response (resistance increases with strain)
+- Excellent mechanical durability
+- Biocompatible silicone matrix
+
+**4. PEDOT:PSS + CNT (Temperature Sensing)**
+
+**Formulation:**
+- PEDOT:PSS dispersion (Clevios PH1000)
+- MWCNT: 1% w/v
+- Ethylene glycol: 5% v/v
+- Triton-X surfactant: Few drops
+- PEDOT:PSS:CNT ratio: 5:1 by weight
+
+**Properties:**
+- Viscosity: approximately 150 cP
+- Negative temperature coefficient (TCR: -0.583% per °C)
+- Conductive polymer with thermally-responsive behavior
+- Good mechanical stability
+
+### Substrate Materials
+
+**Medical-Grade Catheters:**
+- **Silicone catheters**: Johnson & Johnson 3 mm OD Malecot catheter
+- **TPU catheters**: 5 mL balloon catheter
+- **Compatible diameter range**: 1-10 mm
+- **Temperature tolerance**: Up to 100°C (silicone)
+
+### Surface Treatment
+
+**Oxygen Plasma Treatment:**
+- **Power**: 50 W O₂ plasma
+- **Duration**: 3 minutes
+- **Purpose**: Enhance surface energy, improve ink adhesion
+- **Effect**: Decrease contact angle, promote wetting
+
+**Before treatment**: High contact angle (hydrophobic)  
+**After treatment**: Low contact angle (hydrophilic)  
+**Result**: Strong ink-substrate bonding
+
+### Encapsulation
+
+**PDMS Coating:**
+- Thickness: Less than 100 μm
+- **Purpose**: Biocompatibility, flexibility, environmental protection
+- **Properties**: Medical-grade, transparent, stretchable
+- **Application**: Thin conformal coating over all sensors
+
+**Sterilization Compatibility:**
+- Successfully tested with autoclave cycles
+- No delamination observed
+- Maintains electrical performance post-sterilization
+
+---
+
+## Functional Devices Demonstrated
+
+### 1. Strain Sensors
+
+**Design**: Serpentine CNT/Ecoflex traces
+
+**Type 1: Malecot Catheter Wing Sensors**
+
+**Configuration:**
+- Four strain gauges on expandable wings
+- Serpentine pattern: 10 mm × 1 mm, 1 mm meander spacing
+- Connected in parallel for single sensing unit
+
+**Performance:**
+- Baseline resistance: approximately 20.7 kΩ (closed state)
+- Fully expanded: approximately 41.2 kΩ (100% increase)
+- Monotonic increase with wing displacement
+- **Durability**: 50 open/close cycles with only 9.3% drift
+- Clear distinction between deployed and closed states
+- Stable performance at physiological temperatures
+
+**Type 2: Balloon Catheter Sensors**
+
+**Configuration:**
+- Meander pattern: Five meanders over 20 mm length
+- Applied to mid-section of balloon
+- Printed on partially inflated balloon for proper registration
+
+**Performance:**
+- Resistance increase: 17.5% ΔR/R₀ at full inflation
+- **Repeatability**: 20 inflate-deflate cycles with 8.3% drift
+- **Asymmetric detection**: Distinguishes uneven balloon expansion
+- Critical for identifying malposition during procedures
+
+**Applications:**
+- Deployment state monitoring
+- Contact force sensing during ablation
+- Balloon positioning verification
+- Stent expansion confirmation
+
+---
+
+### 2. Temperature Sensors
+
+**Design**: Interdigitated capacitor (IDC) with PEDOT:PSS+CNT overlay
+
+**Structure:**
+- **Layer 1**: Ag-TPU IDC electrodes (9 fingers, 4.5 mm long, 0.2 mm wide, 0.5 mm spacing)
+- **Layer 2**: PEDOT:PSS+CNT composite (8×5 mm patch)
+- Active area: 7×10 mm on catheter surface
+- Compatible with 3 mm and 6 mm diameter catheters
+
+**Sensing Mechanism:**
+- Negative temperature coefficient of resistance (TCR)
+- Temperature increase → Resistance decrease
+- **Physical basis**: 
+  - Improved PEDOT chain ordering at higher temperatures
+  - Enhanced CNT junction conductivity via thermal expansion
+  - Better charge carrier tunneling
+
+**Performance:**
+- **TCR**: -0.583% per °C
+- **Temperature range**: 25-45°C (physiological)
+- **Linearity**: R² greater than 0.9995
+- **Resolution**: Better than 0.1°C
+- **Response time**: 
+  - Heating: 90% of final value in approximately 12 seconds
+  - Cooling: Return to baseline in approximately 27 seconds
+- **Stability**: Negligible drift over 5 heating-cooling cycles
+- **Device-to-device variation**: Standard deviation less than 0.5%
+
+**Applications:**
+- Thermal ablation monitoring
+- Hot saline infusion temperature control
+- Infection detection (fever in situ)
+- Hyperthermia treatment feedback
+- Tissue perfusion assessment
+
+---
+
+### 3. Microheaters
+
+**Design**: Serpentine Ag-TPU resistive heaters
+
+**Configuration:**
+- Pattern: 15 mm × 5 mm meandered trace
+- Room temperature resistance: approximately 40.8 Ω
+- Printed on silicone catheters (100°C tolerance)
+
+**Performance:**
+- **Voltage range**: 0-7.0 V
+- **Maximum temperature**: approximately 55°C at 7.0 V
+- **Temperature rise**: approximately 31°C above ambient (24°C)
+- **Power consumption**: approximately 1.2 W at maximum
+- **Power-temperature relationship**: Linear (T = 25.6·P + 24.5, R² ≈ 0.993)
+- **Heating time**: 90% of final temperature in approximately 1.6 seconds
+- **Cooling time**: Return to baseline in approximately 4.2 seconds
+- **Efficiency**: 25.6°C per watt of power
+
+**Durability:**
+- No degradation over multiple heating cycles
+- Stable resistance under thermal stress
+- No delamination or trace failure
+
+**Applications:**
+- **Thermally-triggered drug release**: Heat-activated polymer coatings
+- **Hyperthermia cancer treatment**: Localized tumor heating
+- **Biofilm prevention**: Periodic heating to inhibit bacterial growth
+- **Tissue welding**: Controlled temperature for sealing
+- **On-demand therapy**: Pulsed heating for responsive treatment
+
+---
+
+### 4. Chipless RFID Tags
+
+**Design Concept**: Passive wireless identification via resonant structures
+
+**No microchip required**: Resonant conductive patterns encode data through RF signatures
+
+**Tag Architecture:**
+
+**Encoding scheme:**
+- **5-bit system**: 1 large resonator (character prefix) + 4 small resonators (numeric code)
+- **Example ID "A1111"**: Apple-shaped "A" resonator + four active bit resonators
+- **Frequency range**: 2-15 GHz
+- **Resonator types**: U-shaped and meandered structures
+- **Ink**: Ag nanoparticle (single layer for maximum resonance)
+
+**Bit encoding:**
+- **Bit "1"**: Resonator present → Notch (dip) at specific frequency
+- **Bit "0"**: Resonator absent → No notch at that frequency
+- **Multiple frequencies**: Different bit positions = unique spectral signature
+
+**Fabrication:**
+- Compact meandered trace shapes for size efficiency
+- Printed using highly conductive Ag nanoparticle ink
+- Thin and flexible (negligible impact on catheter mechanics)
+- No power required (passive operation)
+
+**Characterization:**
+
+**Simulation:** CST Studio (plane wave interrogation, 15 cm range)
+
+**Experimental setup:**
+- Anechoic chamber testing
+- Vivaldi UWB antenna (1.5-15 GHz)
+- Vector network analyzer (Keysight N5230A PNA-L)
+- Distance: approximately 15 cm from tag
+- Monostatic radar cross section (RCS) measurement
+
+**RCS Calculation:**
+
+Where:
+- S11^iso: Isolation baseline (no tag)
+- S11^ref: Reference target complex RCS
+- σ^ref: Known RCS of reference target
+
+**Signal Processing:**
+- Clear frequency notches at designed resonant frequencies
+- Slight frequency shift in measured vs simulated (due to ink conductivity, flexing)
+- Distinct signatures for different tag codes
+
+**Machine Learning Decoder:**
+
+**Algorithm:** Multi-layer perceptron (MLP) neural network
+
+**Training:**
+- Input: RCS spectrum with notch depths at resonant frequencies
+- Output: Decoded tag ID (character + 4-bit code)
+- Dataset: 80% training, 20% testing
+- Feature extraction: 200 MHz tolerance around resonant frequencies
+
+**Performance:**
+- **Accuracy**: Greater than 96% on unseen test data
+- **Robustness**: Works across 3-6 mm catheter diameters
+- **Bending tolerance**: Accurate detection despite flexing
+- **Alternative algorithms tested**: k-NN, SVM (all performed well)
+
+**Read Range:**
+- Standard: 5-10 m
+- Extended: Up to 120 m with Bluetooth bridge/mesh extender
+- Affected by electromagnetic interference
+
+**Current Limitations:**
+- **4-bit capacity**: Limited data storage
+- **Signal attenuation**: Through PDMS encapsulation needs optimization
+- **Conductivity**: Ag nanoparticle ink at 38% bulk silver conductivity
+- **Future improvement**: Copper or gold nanoparticle inks (10⁶-10⁷ S/m)
+
+---
+
+## Blockchain Integration for Device Traceability
+
+### The Medical Device Tracking Problem
+
+**Recent Catheter Recalls (2025):**
+- **Medline arterial catheters**: Detachable hub material risking embolism
+- **Johnson & Johnson Varipulse**: Elevated stroke rates
+- **Medtronic aortic root cannulas**: Loose material hazards
+- **Becton Dickinson Rotarex**: Fractures causing 30 injuries, 4 deaths
+
+**Critical Need**: Secure, immutable tracking from manufacturing through disposal
+
+### Blockchain-Based Solution
+
+**System Architecture:**
+
+**Manufacturing:**
+- Each catheter assigned unique chipless RFID tag ID during printing
+- ID logged to Ethereum blockchain-based secure database
+- Immutable record created at point of manufacture
+- Lot number, size, sterilization history, production date recorded
+
+**Supply Chain:**
+- Wireless scanning at each checkpoint
+- Verification against blockchain ledger
+- Prevents counterfeit devices entering supply chain
+- Tracks distribution from factory to hospital
+
+**Clinical Use:**
+
+**Pre-procedure:**
+- Nurse scans catheter ID after opening package
+- System pulls manufacturing data, verifies authenticity
+- Checks if device is part of recalled batch
+- Confirms correct size/type for intended patient
+
+**During procedure:**
+- Used catheter ID logged with patient records
+- Enables post-operative tracking
+- Links device performance to patient outcomes
+
+**Post-procedure:**
+- Lifecycle data recorded
+- Future recall notifications possible
+- Adverse event correlation
+
+**Advantages:**
+- **Security**: Blockchain immutability prevents tampering
+- **Transparency**: Complete device history accessible
+- **Efficiency**: Rapid verification and recall management
+- **Compliance**: Regulatory traceability requirements met
+- **Cost**: Chipless tags add negligible manufacturing cost
+- **Integration**: No interference with catheter sensing functions
+
+---
+
+## Clinical Applications
+
+### Cardiac Interventions
+
+**Ablation Procedures:**
+- **Contact force sensing**: Strain sensors monitor catheter-tissue contact
+- **Temperature monitoring**: Prevent overheating and charring
+- **Real-time feedback**: Optimize ablation lesion formation
+- **Safety**: Alert to excessive force or temperature
+
+**Coronary Artery Disease:**
+- **Stent deployment**: Strain sensors confirm proper expansion
+- **Balloon angioplasty**: Monitor inflation symmetry
+- **Pressure sensing**: Assess hemodynamic function
+
+### Oncology
+
+**Thermotherapy:**
+- **Hyperthermia treatment**: Microheaters for localized tumor heating
+- **Temperature control**: Precise thermal dose delivery
+- **Drug delivery**: Heat-triggered release from polymer coatings
+- **Monitoring**: Temperature sensors ensure therapeutic range
+
+**Chemotherapy:**
+- **On-demand release**: Heated balloon activates drug coating
+- **Localized delivery**: Minimize systemic side effects
+- **Feedback control**: Sensors guide therapy duration
+
+### Urology
+
+**Catheterization:**
+- **Deployment confirmation**: Strain sensors verify Malecot wing expansion
+- **Infection detection**: Temperature sensors identify fever in situ
+- **Obstruction monitoring**: Pressure/flow sensing
+- **Long-term implants**: Stable sensor performance over weeks
+
+### Vascular Surgery
+
+**Stent Procedures:**
+- **Placement guidance**: Real-time position feedback
+- **Expansion verification**: Strain sensors confirm full deployment
+- **Post-procedure monitoring**: Detect restenosis or migration
+
+**Aneurysm Treatment:**
+- **Device positioning**: Accurate placement critical
+- **Temperature monitoring**: Assess tissue perfusion
+- **Long-term tracking**: RFID enables follow-up verification
+
+---
+
+## Advantages Over Existing Methods
+
+### vs. Planar Microfabrication
+
+**Our Approach:**
+- ✅ Direct printing eliminates film-wrapping step
+- ✅ No adhesive interfaces (fewer failure points)
+- ✅ True conformal coverage (360° continuous)
+- ✅ Strong adhesion (no delamination under strain)
+- ✅ Single automated process (faster, scalable)
+
+**Traditional Method:**
+- ❌ Multi-step assembly (labor-intensive)
+- ❌ Mechanical mismatch (rigid film on soft catheter)
+- ❌ Delamination during bending/inflation
+- ❌ Limited to partial surface coverage
+- ❌ Difficult to scale for production
+
+### vs. Aerosol Jet Printing
+
+**Our Approach:**
+- ✅ Higher viscosity inks (10³-10⁶ cP compatible)
+- ✅ Closed-loop height control (uniform quality)
+- ✅ Multi-material capability (conductors, elastomers, polymers)
+- ✅ Simpler equipment (no atomizers)
+- ✅ Better adhesion (contact deposition)
+
+**Aerosol Jet:**
+- ⚠️ Non-contact (avoids damage but sensitive to height changes)
+- ⚠️ Limited ink viscosity range (requires atomization)
+- ⚠️ Specialized equipment (higher cost)
+- ⚠️ Open-loop in reported systems (assumes ideal surface)
+
+### vs. Commercial Robotic Printers
+
+**Our Approach:**
+- ✅ 360° full circumferential printing
+- ✅ Flexible substrate compatible (catheters, balloons)
+- ✅ Automated height compensation
+- ✅ Single-sided mounting (full access)
+
+**Commercial Systems:**
+- ❌ Limited to approximately ±180° coverage
+- ❌ Requires rigid substrates and support structures
+- ❌ Complex 6-axis trajectory calculations
+- ❌ No real-time height feedback
+
+---
+
+## Performance Validation
+
+### Electrical Stability
+
+**Strain Sensors:**
+- Drift: Less than 10% over 50 cycles (Malecot), 8.3% over 20 cycles (balloon)
+- Signal-to-noise ratio: High (clear state discrimination)
+- Temperature stability: Maintained at physiological conditions
+
+**Temperature Sensors:**
+- Linearity: R² greater than 0.9995 over 20°C range
+- Repeatability: Negligible drift over 5 cycles
+- Device consistency: Standard deviation less than 0.5%
+
+**Microheaters:**
+- Power stability: Constant resistance under thermal cycling
+- No degradation: Multiple heating cycles without failure
+- Predictable performance: Linear power-temperature relationship
+
+**RFID Tags:**
+- Detection accuracy: Greater than 96% with ML decoder
+- Read consistency: Stable across catheter sizes (3-6 mm)
+- Environmental robustness: Functions under flexing and bending
+
+### Mechanical Durability
+
+**Adhesion:**
+- Strong bonding to plasma-treated substrates
+- No delamination under bending (see demonstrations)
+- Withstands balloon inflation/deflation cycles
+- PDMS encapsulation enhances protection
+
+**Flexibility:**
+- Sensors remain functional under catheter flexing
+- Stretchable inks (CNT/Ecoflex) accommodate strain
+- No cracking or electrical failure
+
+**Sterilization:**
+- Survives autoclave cycles
+- No performance degradation
+- Maintains structural integrity
+
+### Manufacturing Repeatability
+
+**Feature Consistency:**
+- Trace width variation: Less than 10%
+- Layer registration: Less than 20 μm error
+- Pitch accuracy: Within 5 μm of design
+
+**Device-to-Device:**
+- Temperature sensor variation: Less than 0.5%
+- Strain sensor baseline: Consistent across samples
+- RFID tag resonances: Predictable frequency shifts
+
+---
+
+## Current Limitations and Future Improvements
+
+### Technical Limitations
+
+**Print Speed:**
+- Current: 5-20 mm/s (relatively slow)
+- Impact: Full catheter printing takes 15-45 minutes
+- **Future solutions:**
+  - Multi-nozzle parallel printing
+  - Improved ink curing (UV-curable formulations)
+  - Optimized toolpath algorithms
+
+**Height Sensing:**
+- Requires optically accessible surfaces
+- Challenge with transparent or highly reflective catheters
+- **Alternative sensors**: LiDAR, inductive, capacitive distance sensing
+- Easy integration into LIMR platform (only height input changes)
+
+**Data Capacity:**
+- RFID tags currently limited to 4-bit codes
+- **Future enhancements:**
+  - Higher-bit tag patterns (longer resonator arrays)
+  - UHF tamper-proof RFID chip integration
+  - Store more data (patient ID, usage history)
+  - Trade-off: Added semiconductor component and cost
+
+**Encapsulation:**
+- Signal attenuation through PDMS layer needs optimization
+- Balance between protection and RF transmission
+- **Optimization needed**: Coating thickness, material permittivity
+
+### Material Considerations
+
+**Biocompatibility:**
+- Current inks chosen for known biocompatibility (TPU, silicone, PEDOT:PSS, CNT)
+- **Future testing required:**
+  - Cytotoxicity assays
+  - Inflammatory response studies
+  - Long-term implant biocompatibility
+
+**Conductivity:**
+- Ag nanoparticle ink: 38% bulk silver conductivity
+- **Recommendation**: Copper or gold nanoparticle inks (10⁶-10⁷ S/m)
+- Higher conductivity improves RFID resonance and sensor performance
+
+**Ink Rheology:**
+- Current range: 150-5000 cP
+- **Expansion opportunities**: Lower viscosity inks for finer features
+
+### Clinical Translation
+
+**Regulatory Approval:**
+- Requires comprehensive biocompatibility testing
+- Long-term stability and aging studies
+- Clinical trials for specific applications
+
+**Manufacturing Scale-Up:**
+- Currently research-scale production
+- **Needed for commercialization:**
+  - High-throughput parallel systems
+  - Automated quality control
+  - ISO-certified cleanroom processes
+
+---
+
+## Future Directions
+
+### Near-Term Enhancements (1-2 years)
+
+**System Improvements:**
+- Automated catheter loading and alignment
+- Multi-nozzle printing heads (faster throughput)
+- In-situ electrical testing during printing
+- Expanded material library (biocompatible inks)
+- UV-curable formulations (instant curing)
+
+**Sensor Expansion:**
+- **Pressure sensors**: Capacitive or piezoelectric
+- **Flow sensors**: Thermal or ultrasonic
+- **pH sensors**: Ion-selective electrodes
+- **Oxygen sensors**: Electrochemical detection
+- **Biochemical sensors**: Glucose, lactate, drug concentration
+
+**Advanced RFID:**
+- Higher bit capacity (8-16 bit codes)
+- Near-field communication (NFC) integration
+- Encrypted identification
+- Battery-free active tags
+
+### Clinical Applications (2-5 years)
+
+**Smart Ablation Catheters:**
+- Integrated contact force, temperature, and impedance sensing
+- Real-time feedback for lesion formation
+- Automated power adjustment based on sensor data
+- Improved safety and efficacy
+
+**Drug-Eluting Smart Catheters:**
+- Temperature-triggered drug release
+- Sensors monitor local concentration
+- Closed-loop dosing control
+- Personalized therapy delivery
+
+**Neurovascular Catheters:**
+- Intracranial pressure monitoring
+- Temperature sensing for stroke detection
+- Strain sensors for navigation
+- Wireless data transmission
+
+**Urological Smart Catheters:**
+- Infection early warning (temperature, pH)
+- Blockage detection (pressure, flow)
+- Long-term implant monitoring
+- RFID-enabled patient data linking
+
+### Personalized Medicine (5+ years)
+
+**Patient-Specific Designs:**
+- CT/MRI-guided custom catheter geometries
+- Tailored sensor placement for anatomy
+- On-demand manufacturing in hospitals
+- Digital twin integration for surgical planning
+
+**Closed-Loop Therapeutic Systems:**
+- Sensors detect physiological state
+- Actuators (heaters, drug release) respond automatically
+- AI-guided therapy adjustment
+- Real-time optimization during procedures
+
+**Multi-Sensor Arrays:**
+- Distributed sensing along catheter length
+- Spatial mapping of tissue properties
+- 3D reconstruction of anatomy
+- Enhanced navigation and targeting
+
+### Broader Medical Device Impact
+
+**Other Tubular Devices:**
+- Endotracheal tubes (pressure, CO₂ sensors)
+- Feeding tubes (pH, temperature)
+- Drainage tubes (flow, obstruction detection)
+- Shunts (pressure monitoring)
+
+**Research Applications:**
+- **Laboratory animal tagging**: Soft tubular RFID tags for rat tails
+- Wireless identification and data logging
+- Blockchain-based research data integrity
+- Academic/pharmaceutical research sectors
+
+**Surgical Instruments:**
+- Smart forceps (force feedback)
+- Instrumented endoscopes (multi-modal sensing)
+- Laparoscopic tools with sensing
+- Robotic surgery integration
+
+---
+
+## Conclusion
+
+This rotary 3D printing platform represents a **paradigm shift in smart catheter manufacturing**. By enabling conformal, high-resolution printing directly on flexible cylindrical substrates with closed-loop quality control, we've transformed passive medical tubes into intelligent, multi-functional devices.
+
+### Key Achievements
+
+**Technical:**
+- Sub-100 μm resolution printing on deformable substrates
+- Real-time height compensation (±5 μm accuracy)
+- Multi-material integration (4+ functional inks)
+- 360° continuous coverage without manual intervention
+- Reliable performance under bending, inflation, thermal cycling
+
+**Functional Devices:**
+- Strain sensors (deployment monitoring)
+- Temperature sensors (thermal therapy feedback)
+- Microheaters (on-demand actuation)
+- Chipless RFID tags (wireless identification)
+
+**Clinical Impact:**
+- Real-time physiological monitoring
+- Closed-loop therapy delivery
+- Secure blockchain-based traceability
+- Scalable manufacturing pathway
+
+### Transformative Potential
+
+This technology enables catheters that:
+- **Sense**: Strain, temperature, pressure, biochemicals
+- **Actuate**: Heating, drug release, mechanical adjustment
+- **Communicate**: Wireless identification, data transmission
+- **Adapt**: Respond to physiological conditions in real-time
+
+As minimally invasive medicine advances toward **personalized, data-driven interventions**, this platform provides a manufacturable pathway for embedding intelligence directly into the interventional tools themselves—transforming them from passive implements into active, responsive members of the surgical team.
+
+---
+
+**Project Leads:**  
+Ankit Shah, Seokkyoon Hong (Equal Contribution)
+
+**Principal Investigators:**  
+Chi Hwan Lee, Hyowon Lee (Co-Corresponding Authors)
+
+**Institution:**  
+Purdue University - Weldon School of Biomedical Engineering, Center for Implantable Devices, Birck Nanotechnology Center
+
+**Manuscript Status:** Under review at Science Robotics
+
+---
+
+**Technical Specifications Summary:**
+
+**Printing System**: PRM1Z8 rotation stage, LTS150 X-Z stages, Keyence CL-3000 confocal sensor, Nordson Ultimus V dispenser  
+**
