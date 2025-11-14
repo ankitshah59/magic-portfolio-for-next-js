@@ -71,8 +71,8 @@ const home: Home = {
         icon="/trademarks/wordmark-dark.svg"
         style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em" }}
       /> */}
-      , where I craft intuitive
-      <br /> user experiences. After hours, I build my own projects.
+      , where I craft meaningful 
+      <br /> solutions to complex biomedical challenges. After hours, I build my own projects.
     </>
   ),
 };
@@ -395,7 +395,7 @@ const about: About = {
           Conducted COMSOL and CST simulations for thermal, electromagnetic, and mechanical modeling of sensors and actuators on soft substrates.
          </>,
          <>
-         Made cross-platform (iOS/Android/web) app to get real-time sensor data (Heart Rate, Respiration, Orientation, Audio) from the flexible custom-made nRF52840 microcontroller with integrated sensors to monitor Equine Health diagnostics using Machine Learning.
+         Made cross-platform (iOS/Android/web) app to get real-time sensor data (Heart Rate, Respiration, Orientation, Audio) from the flexible custom-made nRF52840 SoC microcontroller with integrated sensors to monitor Equine Health diagnostics using Machine Learning.
          </>,
          <>
          Quantified how microelectrode geometry & surface finish impact enzymatic biosensors; demonstrated +83.3%
@@ -407,25 +407,25 @@ const about: About = {
         images: [
           // optional: leave the array empty if you don't want to display images
           {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/Picture1.png",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
                     {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/Electrodes.jpg",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
                     {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/Sensor1.png",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
                     {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/Horse.png",
             alt: "Once UI Project",
             width: 16,
             height: 9,
@@ -454,25 +454,13 @@ const about: About = {
         ],
         images: [
                     {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/bme1.jfif",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
                     {
-            src: "/images/projects/project-01/cover-01.jpg",
-            alt: "Once UI Project",
-            width: 16,
-            height: 9,
-          },
-                    {
-            src: "/images/projects/project-01/cover-01.jpg",
-            alt: "Once UI Project",
-            width: 16,
-            height: 9,
-          },
-                    {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/bme2.jfif",
             alt: "Once UI Project",
             width: 16,
             height: 9,
@@ -496,13 +484,13 @@ const about: About = {
         images: [
           // optional: leave the array empty if you don't want to display images
           {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/acmevent.jfif",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
                     {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/acme3.png",
             alt: "Once UI Project",
             width: 16,
             height: 9,
@@ -529,13 +517,13 @@ const about: About = {
         images: [
           // optional: leave the array empty if you don't want to display images
           {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/unm1.jfif",
             alt: "Once UI Project",
             width: 16,
             height: 9,
           },
                     {
-            src: "/images/projects/project-01/cover-01.jpg",
+            src: "/images/projects/project-01/unm2.jfif",
             alt: "Once UI Project",
             width: 16,
             height: 9,
@@ -645,8 +633,8 @@ const gallery: Gallery = {
   label: "Gallery",
   title: `Photo gallery – ${person.name}`,
   description: `A photo collection by ${person.name}`,
-  // Images by https://lorant.one
-  // These are placeholder images, replace with your own
+
+
   images: [
     {
       src: "/images/gallery/horizontal-1.jpg",
