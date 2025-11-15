@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  VERCEL_ORG_ID: ${{qnf6HTXKnF1M1K9ccnLgheVD }}
+  VERCEL_ORG_ID: ${{qnf6HTXKnF1M1K9ccnLgheVD}}
   VERCEL_PROJECT_ID: ${{prj_xbYokKedyfRR6WAjV9Uop0CEJS6f}}
 
 jobs:
