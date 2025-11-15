@@ -435,7 +435,7 @@ const about: About = {
       {
         company: "Purdue University",
         timeframe: "2021 - Present",
-        role: "Senior Design Teachning Assistant",
+        role: "Senior Design Teaching Assistant",
         achievements: [
           <>
             Mentored 50+ undergraduate Biomedical Engineering Capstone design teams (2021–2025), working closely
