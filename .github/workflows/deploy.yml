@@ -1,26 +1,31 @@
-name: Deploy to Vercel
+name: Run Tests
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-env:
-  VERCEL_ORG_ID: ${{qnf6HTXKnF1M1K9ccnLgheVD}}
-  VERCEL_PROJECT_ID: ${{prj_xbYokKedyfRR6WAjV9Uop0CEJS6f}}
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: vercel/action@v6
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: |
+          npm install
+          npm test
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest  
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          vercel-token: ${{RL7KhYIWiGqpt3wLSuCH2WnJ}}
-          vercel-org-id: ${{qnf6HTXKnF1M1K9ccnLgheVD}}
-          vercel-project-id: ${{prj_xbYokKedyfRR6WAjV9Uop0CEJS6f}}
-          vercel-args: ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
+          node-version: 20
+      - run: npm install
+
+      - name: Deploy to Vercel
+        run: npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --confirm
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_USER_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  
