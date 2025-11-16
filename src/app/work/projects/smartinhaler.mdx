@@ -5,6 +5,7 @@ summary: "Explore the enduring debate between using spaces and tabs for code ind
 images:
   - "/images/projects/project-01/flex1.png"
   - "/images/projects/project-01/flex2.png"
+  - "/images/projects/project-01/schinhaler.png"
   - "/images/projects/project-01/flex3.png"
 team:
   - name: "Ankit Shah"
@@ -14,3 +15,177 @@ team:
 link: ""
 ---
 
+# Smart Inhaler: Improving Respiratory Health Through Intelligent Sensing
+
+Inhalers are life-saving tools for millions of people with asthma, COPD, chronic inflammation, and other pulmonary conditions. Yet studies show that **over 70% of patients use inhalers incorrectly**, reducing drug effectiveness and impacting long-term health.
+
+The Smart Inhaler project introduces **real-time inhalation sensing**, adaptive feedback, and a fully flexible origami-based PCB that integrates into a compact add-on module.
+
+## 📌 Why This Project Matters
+
+Traditional inhalers provide no feedback on how well the patient is inhaling. Most users:
+
+- Inhale too quickly or too weakly
+- Trigger the dose at the wrong time
+- Produce inconsistent airflow
+- Don't understand proper inhalation mechanics
+
+Over months and years, this leads to **suboptimal drug delivery** and uncontrolled symptoms.
+
+The Smart Inhaler solves this by analyzing **real-time inhalation patterns**, comparing them to ideal profiles, and guiding the user to correct their technique.
+
+## 🧠 Detecting and Correcting Inhalation Patterns
+
+The system uses:
+
+- **NPA-700B ultra-sensitive pressure sensor**
+- **Acoustic sensing (speaker + microphone path)**
+- **RGB LEDs for intuitive visual feedback**
+- **ESP32-C3 controller for edge processing**
+- **Audio prompts for guidance**
+
+These detect:
+
+- Flow rate and inhalation speed
+- Turbulence and airflow smoothness
+- Actuation timing
+- Breath duration
+- Characteristic pressure/flow waveform shape
+
+### 🔹 Real-time feedback
+
+LEDs and audio prompts guide the user during each use.
+
+### 🔹 Long-term adaptive learning
+
+Daily use builds inhalation consistency over time.
+
+## Flexible Origami-Inspired PCB Design
+
+To ensure universal compatibility with standard inhalers, the electronics are implemented on a **flexible, foldable PCB**, allowing the device to wrap smoothly around curved surfaces or pack into a slim enclosure.
+
+Key design elements include:
+
+- Segmented rigid "islands" for key components
+- Flexible interconnect bridges
+- Mechanical cutouts for controlled bending
+- Stress relief zones
+- Thin, ergonomic edge regions
+- Curvature-friendly routing
+
+This creates a highly adaptable electronic module capable of conforming to various inhaler geometries.
+
+## 🔧 4-Layer PCB Architecture (Altium Designer)
+
+The Smart Inhaler electronics use a **4-layer PCB** designed in Altium for optimal noise performance and mechanical flexibility.
+
+### Layer Stack
+
+**• Layer 1 — Top Layer**  
+Primary components, sensors, LEDs, speaker traces, pressure sensor interface.
+
+**• Layer 2 — Inner Layer 1 (Ground Plane)**  
+Continuous low-impedance ground reference for sensors and ESP32 high-speed signals.
+
+**• Layer 3 — Inner Layer 2 (Power Plane)**  
+Isolated power distribution for 3.3 V, analog power regions, and battery lines.
+
+**• Layer 4 — Bottom Layer**  
+Secondary routing, LED buses, speaker/mic lines, flex-region traces.
+
+### Why a 4-layer design?
+
+- Lower noise for pressure sensor readings
+- Cleaner return paths (reduced EMI)
+- Improved power integrity
+- Reduced crosstalk between analog and digital domains
+- Enables origami folding without compromising reliability
+
+## 🛠️ How It Is Made
+
+The Smart Inhaler combines PCB manufacturing, precision assembly, firmware design, and mechanical engineering. Here's the full build pipeline:
+
+### 1️⃣ PCB Fabrication
+
+The 4-layer flexible PCB is manufactured using:
+
+- Polyimide substrate for flexibility
+- ENIG finishing for sensor pads
+- Laser-cut mechanical slots for fold lines
+- Controlled-thickness copper for reliability during bending
+- Embedded stiffeners under critical components
+
+Special care is taken to keep high-stress areas away from solder joints.
+
+### 2️⃣ Soldering and Component Assembly
+
+The board is assembled using a combination of:
+
+- **Reflow soldering** for SMD passives, sensors, LEDs, ESP32 module
+- **Hand soldering** for the speaker and edge connectors
+- **Low-temperature solder paste** to protect the flexible substrate
+- **Underfill** for the pressure sensor chamber to ensure airtight stability
+
+RGB LEDs and the pressure sensor are oriented precisely to align with the enclosure's airflow ports.
+
+### 3️⃣ Origami Folding and Mechanical Integration
+
+After assembly:
+
+1. The PCB is pre-scored along the fold lines
+2. Bending regions are heated slightly to soften the flex substrate
+3. The board is folded into its final compact geometry
+4. Stiffeners and adhesive anchors are added
+5. The module is inserted into the **Fusion 360–designed add-on enclosure**
+
+This transforms a flat PCB into a **3D conformal electronics module**.
+
+### 4️⃣ Enclosure Fabrication (Fusion 360 Design)
+
+The enclosure is 3D printed or injection-molded with:
+
+- Airflow entry ports
+- A pressure chamber aligned with the sensor
+- LED visibility cutouts
+- A snap-fit mounting clip for inhalers
+- Battery compartment + charging port
+- Strain relief for flex sections
+
+Its small size ensures zero interference with medication actuation.
+
+### 5️⃣ Firmware, Calibration and Data Processing
+
+The ESP32-C3 firmware includes:
+
+- Real-time ADC sampling of pressure waveforms
+- Flow-rate estimation using digital filtering
+- Noise suppression with median and Kalman filtering
+- BLE logging for long-term monitoring
+- LED/audio feedback algorithms
+- Patient-specific inhalation pattern learning
+
+Calibration involves:
+
+- Zero-pressure offset
+- Flow curve mapping
+- Speaker channel tuning
+- LED brightness calibration
+
+### 6️⃣ Testing and Validation
+
+Before use, each unit undergoes:
+
+- Airflow chamber testing
+- Pressure response characterization
+- LED/Audio prompt validation
+- Battery load testing
+- Mechanical flex cycling
+- Drop testing in the enclosure
+
+This ensures long-term reliability for daily inhaler use.
+
+## 🚀 Vision
+
+This Smart Inhaler merges biomedical sensing, embedded intelligence, and flexible origami electronics into a compact, ergonomic system that **teaches users to inhale correctly, every time**.
+
+It transforms a passive inhaler into a **real-time respiratory coach**.
