@@ -27,7 +27,7 @@ export const Footer = () => {
           <Text onBackground="neutral-weak">
            
             / Next.js + {" "}
-            <SmartLink href="https://once-ui.com/products/magic-portfolio">Once UI</SmartLink>
+            Once UI
           </Text>
         </Text>
         <Row gap="16">
