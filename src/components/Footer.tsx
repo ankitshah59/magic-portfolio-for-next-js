@@ -26,8 +26,8 @@ export const Footer = () => {
           <Text paddingX="4">{person.name}</Text>
           <Text onBackground="neutral-weak">
            
-            / Next.js + {" "}
-            Once UI
+            / Next.js {" "}
+          
           </Text>
         </Text>
         <Row gap="16">
