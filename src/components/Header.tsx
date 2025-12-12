@@ -185,7 +185,7 @@ export const Header = () => {
           >
             <Flex s={{ hide: true }}>
               {display.time && <TimeDisplay timeZone={person.location} />}
-            </Flex>
+            </Flex>b
           </Flex>
         </Flex>
       </Row>
