@@ -14,7 +14,7 @@ import {
 import { home } from "./index";
 
 // IMPORTANT: Replace with your own domain address - it's used for SEO in meta tags and schema
-const baseURL: string = "https://demo.magic-portfolio.com";
+const baseURL: string = "https://ankitech.vercel.app";
 
 const routes: RoutesConfig = {
   "/": true,
@@ -188,15 +188,15 @@ const mailchimp: MailchimpConfig = {
 const schema: SchemaConfig = {
   logo: "",
   type: "Organization",
-  name: "Once UI",
+  name: "AnkiTech",
   description: home.description,
-  email: "lorant@once-ui.com",
+  email: "ankitech59@gmail.com",
 };
 
 // social links
 const sameAs: SameAsConfig = {
-  threads: "https://www.threads.com/@once_ui",
-  linkedin: "https://www.linkedin.com/company/once-ui/",
+  threads: "https://www.threads.com/@AnkiTechhy",
+  linkedin: "https://www.linkedin.com/company/anki-tech/",
   discord: "https://discord.com/invite/5EyAQ4eNdS",
 };
 
